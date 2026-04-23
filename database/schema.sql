@@ -5,6 +5,14 @@ GO
 USE YoutaiteDB;
 GO
 
+-- Drop tables in reverse order (children before parents)
+DROP TABLE IF EXISTS SingerInfo;
+DROP TABLE IF EXISTS VocalExamples;
+DROP TABLE IF EXISTS Socials;
+DROP TABLE IF EXISTS CreatorLanguages;
+DROP TABLE IF EXISTS Languages;
+DROP TABLE IF EXISTS Creators;
+
 -- 1. Creators Table
 CREATE TABLE Creators (
     Id INT PRIMARY KEY IDENTITY(1,1),
@@ -53,3 +61,40 @@ CREATE TABLE SingerInfo (
 );
 
 GO
+
+-- Seed Data
+INSERT INTO Creators (Name, About, ProfilePictureUrl, Equipment)
+VALUES 
+    ('Rachie', 
+    '🎀 hey everyone, rachie here! ⌒°(๑ • ᴗ ♥ ๑)°⌒ ♡  💌
+    i''ve been making english covers of vocaloid songs since i was 13 or something as a way for my classmates to stop bullying me for listening to weeb songs.
+    when I''m not making covers for YouTube, I stream as a vtuber!
+    thanks for checking me out 💗', 
+    'https://pbs.twimg.com/profile_images/2001407730699866113/uZESzpzu_400x400.jpg', 
+    'Neumann U87'),
+    ('Kuraiinu', 'A ghost dog, singing and making music with friends and vocal synths', 'https://static.wikia.nocookie.net/nicodougasingers/images/1/1b/Kuraiinu_Twitter_PFP.png/revision/latest?cb=20250802120938', 'Rode NT1');
+
+INSERT INTO Languages (LanguageName)
+VALUES ('Japanese'), ('English'), ('Korean'), ('Indonesian');
+
+INSERT INTO CreatorLanguages (CreatorId, LanguageId)
+VALUES (1, 2), (1, 4), (2, 1), (2, 2);
+
+INSERT INTO Socials (CreatorId, PlatformName, Url)
+VALUES 
+    (1, 'YouTube', 'https://www.youtube.com/@rachie/'),
+    (1, 'Twitter', 'https://x.com/splendiferachie'),
+    (1, 'Twitch', 'https://www.twitch.tv/rachie'),
+    (2, 'YouTube', 'https://www.youtube.com/@Kuraiinu'),
+    (2, 'Twitter', 'https://x.com/_Kuraiinu'),
+    (2, 'Patreon', 'https://www.patreon.com/Kuraiinu');
+
+INSERT INTO SingerInfo (CreatorId, VoiceType, RangeLow, RangeHigh)
+VALUES 
+    (1, 'Soprano', 'A3', 'E6'),
+    (2, 'Baritone', 'G3', 'C6');
+
+INSERT INTO VocalExamples (CreatorId, Title, Url)
+VALUES
+    (1, 'Summersong Cover', 'https://www.youtube.com/watch?v=KgQ22VcamWc'),
+    (2, 'Birdbrain Cover', 'https://www.youtube.com/watch?v=sZAaJa6J_iw');
